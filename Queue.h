@@ -10,8 +10,8 @@ public:
 	DLListNode();
 	DLListNode(T*);
 	~DLListNode();
-	DLListNode *next;
-	DLListNode *prev;
+	DLListNode<Student> *next;
+	DLListNode<Student> *prev;
 	T *data;
 };
 
@@ -39,22 +39,25 @@ template <class T>
 class Queue
 {
 private:
-	DLListNode<T> *front;
-	DLListNode<T> *back;
-	unsigned int size;
+	DLListNode<Student> *front;
+	DLListNode<Student> *back;
+	int size;
 public:
 	Queue();
 	~Queue();
 	void insertFront(T*);
-	void insertBack(T* student);
-	T removeFront();
+	void insertBack(T*);
+	T* removeFront();
 	T removeBack();
+	T* peekFront();
+	T peekBack();
 	T find(T*);
 	T deletePos(int);
 
 	void printList();
 	bool isEmpty();
-	unsigned int getSize();
+	bool notEmpty();
+	int getSize();
 };
 
 template <class T>
@@ -88,31 +91,52 @@ void Queue<T>::insertFront(T *data)
 }
 
 template <class T>
-void Queue<T>::insertBack(T* student)
+void Queue<T>::insertBack(T *student)
 {
-	DLListNode<Student*> *node = new DLListNode<Student*>(student);
+	DLListNode<Student> *node = new DLListNode<Student>(student);
 	if (size == 0) {
 		back = node;
 		front = node;
 	}
 	else {
-		node->prev = back;
-		back->next = node;
+		node->next = back;
+		back->prev = node;
 		back = node;
 	}
 	++size;
 }
 
 template <class T>
-T Queue<T>::removeFront()
+T* Queue<T>::removeFront()
 {
 	if (isEmpty()) {
 		return NULL;
 	}
-	T data = front->data;
-	front = front->next;
-	front->prev = NULL;
-	return data;
+	else if (size == 1) {
+		T* data = front->data;
+		front = NULL;
+		back = NULL;
+		--size;
+		return data;
+	}
+	else {
+		T *data = front->data;
+		front = front->prev;
+		front->next = NULL;
+		--size;
+		return data;
+	}
+
+
+}
+
+template <class T>
+T* Queue<T>::peekFront()
+{
+	if (isEmpty()) {
+		return NULL;
+	}
+	return front->data;
 }
 
 template <class T>
@@ -122,15 +146,24 @@ T Queue<T>::removeBack()
 		return NULL;
 	}
 	T data = back->data;
-	back = back->prev;
-	back->next = NULL;
+	back = back->next;
+	back->prev = NULL;
 	return data;
+}
+
+template <class T>
+T Queue<T>::peekBack()
+{
+	if (isEmpty()) {
+		return NULL;
+	}
+	return back->data;
 }
 
 template <class T>
 T Queue<T>::find(T* d)
 {
-	DLListNode *current = front;
+	DLListNode<Student> *current = front;
 	while (current->next != NULL) {
 		if (current->data == d) {
 			T data = current->data;
@@ -188,9 +221,10 @@ void Queue<T>::printList()
 		cout << "Empty List\n";
 	}
 	else {
-		DLListNode<Student> *current = front;
+		DLListNode<Student> *current = back;
 		while (current != NULL) {
-			cout << current << " ";
+			current->data->print(); 
+			cout << " ";
 			current = current->next;
 		}
 		cout << endl;
@@ -204,7 +238,13 @@ bool Queue<T>::isEmpty()
 }
 
 template <class T>
-unsigned int Queue<T>::getSize()
+bool Queue<T>::notEmpty()
+{
+	return(front != NULL && back != NULL);
+}
+
+template <class T>
+int Queue<T>::getSize()
 {
 	return size;
 }

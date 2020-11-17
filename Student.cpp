@@ -2,11 +2,11 @@
 
 
 
-Student::Student()
+Student::Student() // default constructor
 {
 }
 
-Student::Student(int at, int tn, int n)
+Student::Student(int at, int tn, int n) // overloaded constructor, stores student data
 {
 	arrivalTime = at;
 	timeNeeded = tn;
@@ -18,12 +18,26 @@ Student::~Student()
 {
 }
 
-int Student::getTN()
+int Student::getTimeNeeded() // returns time needed at window
 {
 	return timeNeeded;
 }
 
-ostream& operator<<(ostream& os, const Student& s) {
-	os << "Student: " << s.stdNum << endl;
-	return os;
+int Student::getTimeHelped() // returns time the student was sent to a window
+{
+	return timeHelped;
+}
+
+int Student::getArrivalTime() // returns time arrived to the office
+{
+	return arrivalTime;
+}
+
+void Student::print() { // prints student number
+	cout << "Student: " << stdNum;
+}
+
+void Student::setTimeHelped(int t) // sets time student was helped at the window
+{
+	timeHelped = t;
 }

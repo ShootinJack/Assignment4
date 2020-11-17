@@ -11,8 +11,8 @@ class Input
 private:
 	string filename;
 	ifstream inFile;
-	Queue<Student> *myQueue;
-	int openWindows, time, numStudents, timeNeeded, stdNum;
+	Queue<Student> myQueue;
+	int openWindows, time, numStudents, timeNeeded, stdNum, windowNum;
 
 public:
 	Input();
@@ -21,5 +21,8 @@ public:
 	void parseFile();
 	void repromptUser();
 	void printList();
+	int getWindowNum();
+	int getStdNum();
+	Queue<Student> getLine();
 };
 
