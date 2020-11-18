@@ -14,3 +14,8 @@ The program will run the the simulation and list
 7. Number of windows idle for over 5 minutes.
 
 
+Used the first Book of C++ 
+Gary Bronson
+
+Used sort() from sort library 
+http://www.cplusplus.com/reference/algorithm/sort/
